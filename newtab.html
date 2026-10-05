@@ -13,7 +13,7 @@
     <aside class="sidebar">
       <div class="brand">
         <img src="icons/icon48.png" alt="" class="brand-logo" />
-        <span class="brand-name">U NEWS</span>
+        <span class="brand-name">UBC NEWS</span>
       </div>
 
       <nav class="nav" id="nav" aria-label="Sections">
@@ -40,6 +40,15 @@
         <button class="nav-item" data-section="sports">
           <svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0V4zM17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg>
           <span>Sports</span>
+        </button>
+        <button class="nav-item" data-section="entertainment">
+          <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5l-5.4 3 1.2-6-4.5-4.2 6.1-.7z"/></svg>
+          <span>Entertainment</span>
+        </button>
+        <button class="nav-item nav-saved" data-section="saved">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+          <span>Saved</span>
+          <span class="count" id="saved-count" hidden>0</span>
         </button>
       </nav>
 
@@ -72,25 +81,41 @@
       <header class="topbar">
         <form class="search" id="search-form" role="search">
           <svg viewBox="0 0 24 24" class="search-icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <input id="search" type="search" placeholder="Search articles, topics, or regions..." autocomplete="off" />
+          <input id="search" type="search" placeholder="Search all categories…  (try \"exact phrase\" or -exclude)" autocomplete="off" />
+          <button type="button" class="search-clear" id="search-clear" aria-label="Clear search" hidden>&times;</button>
           <kbd class="kbd">/</kbd>
         </form>
-        <div class="clock" aria-live="off">
-          <div class="clock-date" id="clock-date"></div>
-          <div class="clock-time" id="clock-time"></div>
+        <div class="top-right">
+          <button class="icon-btn" id="refresh" type="button" title="Refresh feeds (R)" aria-label="Refresh feeds">
+            <svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.5 15a9 9 0 11-2.1-9.4L23 10"/></svg>
+          </button>
+          <div class="clock" aria-live="off">
+            <div class="clock-date" id="clock-date"></div>
+            <div class="clock-time" id="clock-time"></div>
+          </div>
         </div>
       </header>
 
       <div class="content">
         <section class="left">
+          <div class="filters" id="filters">
+            <div class="chips" id="chips-section" aria-label="Filter by category" hidden></div>
+            <div class="chips" id="chips-source" aria-label="Filter by source" hidden></div>
+          </div>
           <article class="hero" id="hero" aria-live="polite">
             <div class="skeleton hero-skeleton"></div>
           </article>
           <div class="cards" id="cards"></div>
+
+          <section class="results panel" id="results" hidden>
+            <div class="results-head" id="results-head" role="status"></div>
+            <ul class="results-list" id="results-list"></ul>
+            <button class="btn-more" id="show-more" type="button" hidden>Show more results</button>
+          </section>
         </section>
 
         <aside class="right">
-          <section class="panel">
+          <section class="panel" id="latest-panel">
             <div class="panel-head">
               <h2>Latest Articles</h2>
               <button class="link-btn" id="view-all">View all <span aria-hidden="true">&rarr;</span></button>
@@ -106,7 +131,7 @@
         </aside>
       </div>
 
-      <!-- <p class="status" id="status" role="status"></p> -->
+      <p class="status" id="status" role="status"></p>
     </main>
   </div>
 
@@ -141,6 +166,42 @@
           <option value="60">1 hour</option>
         </select>
       </label>
+
+      <label class="field check-row">
+        <span>Open articles in a new tab</span>
+        <input type="checkbox" id="set-newtab" />
+      </label>
+
+      <label class="field check-row">
+        <span>Mix sources evenly on section pages</span>
+        <input type="checkbox" id="set-mix" />
+      </label>
+
+      <fieldset class="sources">
+        <legend>Sources</legend>
+        <div class="sources-grid" id="set-sources"></div>
+      </fieldset>
+
+      <fieldset class="sources" id="custom-box">
+        <legend>Your feeds</legend>
+        <ul class="custom-list" id="custom-list"></ul>
+        <div class="add-feed">
+          <input id="add-url" type="text" inputmode="url" placeholder="Feed or website address" autocomplete="off" spellcheck="false" />
+          <select id="add-section" aria-label="Section for the new feed"></select>
+          <button type="button" class="btn-ghost" id="add-feed">Add</button>
+        </div>
+        <p class="hint" id="add-msg" role="status"></p>
+      </fieldset>
+
+      <div class="dialog-links">
+        <button type="button" class="btn-ghost" id="clear-read">Clear read history</button>
+        <a class="btn-ghost" id="feedback" target="_blank" rel="noopener" hidden>Send feedback</a>
+      </div>
+
+      <p class="hint">
+        Shortcuts: <kbd class="kbd">/</kbd> search · <kbd class="kbd">Esc</kbd> clear ·
+        <kbd class="kbd">R</kbd> refresh · <kbd class="kbd">1</kbd>–<kbd class="kbd">8</kbd> sections
+      </p>
 
       <div class="dialog-actions">
         <button value="close" class="btn">Done</button>

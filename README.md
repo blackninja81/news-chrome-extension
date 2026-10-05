@@ -1,8 +1,8 @@
-# U News – New Tab extension
+# UBC News – New Tab extension
 
 A Manifest V3 browser extension that replaces the new tab page with a news dashboard:
 sidebar sections, search, clock, featured story, story cards, latest list and a quote of the day.
-Headlines come live from BBC News and NPR RSS feeds.
+Headlines come live from 17 sources (BBC, NPR, NY Times, Guardian, Al Jazeera, Wired, The Verge, Bloomberg and more) via RSS and Atom feeds.
 
 ## Folder structure
 
@@ -35,7 +35,7 @@ After editing code, click the reload icon on the extension card, then open a new
 
 ## Customise
 
-- **Add or change news sources:** edit `FEEDS` in `js/config.js`, and add the feed's domain
+- **Change built-in sources:** edit `FEEDS` in `js/config.js`, and add the feed's domain
   to `host_permissions` in `manifest.json`. Any standard RSS 2.0 feed works.
 - **Add a section:** add it to `SECTIONS` and `FEEDS` in `config.js`, then add a matching
   button with `data-section="..."` in the sidebar of `newtab.html`.
@@ -47,6 +47,13 @@ After editing code, click the reload icon on the extension card, then open a new
 
 - Feeds are cached, so the tab renders instantly and refreshes in the background.
   The refresh interval is in Settings (default 15 minutes).
-- Keyboard: `/` focuses search, `Esc` clears it.
+- Search covers every category. Use several words (all must match), "exact phrases", and -exclude.
+  Filter results with the category and source chips.
+- Save stories with the bookmark icon; they appear under **Saved**. Opened stories are dimmed.
+- Keyboard: `/` search, `Esc` clear, `R` refresh, `1`-`8` switch sections.
+- **Add your own feed:** Settings -> Your feeds. Paste a feed or website address; the extension
+  finds the feed, asks permission for that one site, and adds it to the section you pick.
+- Set `FEEDBACK_URL` in `js/config.js` (form or mailto: link) to show a Send feedback button.
+- Settings: per-source on/off, open links in a new tab, mix sources evenly, clear read history.
 - Reuters and AP don't offer public RSS feeds, so they appear as quick links only.
 - All feed text is inserted as plain text, never as HTML.
