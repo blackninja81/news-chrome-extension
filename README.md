@@ -1,4 +1,4 @@
-# UBC News – New Tab extension
+# U News – New Tab extension
 
 A Manifest V3 browser extension that replaces the new tab page with a news dashboard:
 sidebar sections, search, clock, featured story, story cards, latest list and a quote of the day.
